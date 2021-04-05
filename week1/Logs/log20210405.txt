@@ -97,3 +97,16 @@ Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instanc
 ClientConnectionId:00000000-0000-0000-0000-000000000000
 Error Number:-1,State:0,Class:20
 2021-04-05 10:56:26.848 +07:00 [INF] Starting web host
+2021-04-05 14:32:33.050 +07:00 [INF] Starting web host
+2021-04-05 14:34:41.069 +07:00 [INF] Starting web host
+2021-04-05 14:36:56.059 +07:00 [INF] Starting web host
+2021-04-05 14:38:04.905 +07:00 [INF] Starting web host
+2021-04-05 14:39:46.703 +07:00 [INF] Starting web host
+2021-04-05 14:39:59.782 +07:00 [INF] Starting web host
+2021-04-05 14:49:15.003 +07:00 [INF] Starting web host
+2021-04-05 14:52:47.035 +07:00 [INF] Starting web host
+2021-04-05 14:58:30.667 +07:00 [INF] Starting web host
+2021-04-05 15:06:34.088 +07:00 [INF] Starting web host
+2021-04-05 15:10:07.970 +07:00 [INF] Starting web host
+2021-04-05 15:11:37.462 +07:00 [INF] Starting web host
+2021-04-05 15:14:26.946 +07:00 [INF] Starting web host

@@ -1,5 +1,9 @@
 using System;
+using week1.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace week1.Controllers
 {
     [ApiController]
@@ -96,35 +100,6 @@ namespace week1.Controllers
             return Ok(result);
         }
 
-         [HttpPost]
-        [Route("ConvertDate/Christ")]
-        public IActionResult ConvertChrist(int date,string mouth ,int year){
-            
-            string newMouth="";
-            int newYear = 0;
-
-            switch (mouth){
-                  case "01" : newMouth = "January";break;
-                  case "02" : newMouth = "Febuary";break;
-                  case "03" : newMouth = "March";break;
-                  case "04" : newMouth = "April";break;
-                  case "05" : newMouth = "May";break;
-                  case "06" : newMouth = "June";break;
-                  case "07" : newMouth = "July";break;
-                  case "08" : newMouth = "August";break;
-                  case "09" : newMouth = "September";break;
-                  case "10" : newMouth = "October";break;
-                  case "11" : newMouth = "November";break;
-                  case "12" : newMouth = "December";break;
-              }
-
-              newYear = year - 543;
-
-              string result = date + " " + newMouth + " " + newYear;
-
-            return Ok(result);
-        }
-
 
        [HttpGet("Now")]
         public IActionResult GetNow(string name)
@@ -132,5 +107,35 @@ namespace week1.Controllers
             var result = DateTime.Now;
             return Ok(result);
         }
+
+         [HttpPost("PostFormModel")]
+    public IActionResult PostFormModel(Book input)
+    {
+        var result = input;
+            return Ok(result);
+    }
+      
+    
+      [HttpGet("SearchBooks")]
+      public IActionResult SearchBooks(string search)
+        {
+            var bookListx = new List<Book>();
+            //shotHand
+            bookListx.Add(new Book() { Id = 1, Name = "Salmon", Price = 20, CreatedDate = DateTime.Now });
+            bookListx.Add(new Book() { Id = 3, Name = "Mama", Price = 20, CreatedDate = DateTime.Now });
+            bookListx.Add(new Book() { Id = 4, Name = "Cola", Price = 20, CreatedDate = DateTime.Now });
+            bookListx.Add(new Book() { Id = 5, Name = "Egg", Price = 20, CreatedDate = DateTime.Now });
+            bookListx.Add(new Book() { Id = 6, Name = "Cheese", Price = 20, CreatedDate = DateTime.Now });
+            bookListx.Add(new Book() { Id = 7, Name = "Egg", Price = 20, CreatedDate = DateTime.Now });
+            bookListx.Add(new Book() { Id = 8, Name = "Cheese", Price = 20, CreatedDate = DateTime.Now });
+
+            var baconBook = new Book() { Id = 2, Name = "Bacon", Price = 20, CreatedDate = DateTime.Now };
+            bookListx.Add(baconBook);
+
+            var searchResult = bookListx.Where(x => x.Name.Contains(search)).First();
+            return Ok(searchResult);
+        }
+
+
     }
 }
