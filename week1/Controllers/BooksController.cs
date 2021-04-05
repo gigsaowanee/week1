@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 namespace week1.Controllers
 {
@@ -124,5 +125,12 @@ namespace week1.Controllers
             return Ok(result);
         }
 
+
+       [HttpGet("Now")]
+        public IActionResult GetNow(string name)
+        {
+            var result = DateTime.Now;
+            return Ok(result);
+        }
     }
 }
