@@ -58,20 +58,48 @@ namespace week1.Controllers
             return Ok(result);
         }
 
-        [HttpPut("UpdateWeightAndHeight")]
-        public IActionResult UpdateWeightAndHeight(int id , double weight, double height)
+        [HttpPut("UpdatePerson")]
+        public IActionResult UpdatePerson(int id , string name , double weight, double height , string birthDate)
         {
             var person = PersonData().Where(x => x.Id.Equals(id)).FirstOrDefault();
             
             if(weight != 0 )
             {
-            person.Weight = weight;
+                if (weight >= 40 && weight <= 200)  
+                {
+                    person.Weight = weight;
+                }else{
+                    return NotFound("weight valid range 40 - 200 "+ "\n" +"your weight:"+ weight);
+                }
+            }
+
+            if(name != null )
+            {
+                if (name.Length <= 10 )  
+                {
+                    person.Name = name;
+                }else
+                {
+                    return NotFound("Name length can not more than 10 digits "+ "\n" +"your name: "+ name.Length+ "digits");
+                }
+            }
+
+            if(birthDate != null )
+            {
+               person.BirthDate = Convert.ToDateTime(birthDate);
             }
 
             if(height != 0 )
             {
-               person.Height = height;
+                if (height >= 140 && height <= 220)  
+                {
+                    person.Height = height;
+                }else
+                {
+                    return NotFound("Height valid range 140 - 220 "+ "\n" +"your height:"+ height);
+                }
             }
+
             string text = "Update Successfully" + "\n\n" + "Id: " + person.Id + "\n" + "Name: " + person.Name + "\n" + "Weight: " + person.Weight + "\n" + "Height: " + person.Height + "\n" + "BirthDate: " + person.BirthDate.ToString("dd/MM/yyyy");
             return Ok(text);
         }
@@ -83,5 +111,8 @@ namespace week1.Controllers
              return Ok(person);
         }
 
+       
+
+        }
+
     }
-}
