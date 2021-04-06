@@ -54,3 +54,9 @@ System.FormatException: String '1998/01/1898' was not recognized as a valid Date
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
 2021-04-06 09:18:32.363 +07:00 [INF] Starting web host
+2021-04-06 09:29:39.067 +07:00 [INF] Starting web host
+2021-04-06 09:43:14.636 +07:00 [INF] Starting web host
+2021-04-06 09:52:56.489 +07:00 [INF] Starting web host
+2021-04-06 09:53:50.280 +07:00 [INF] Starting web host
+2021-04-06 09:54:58.280 +07:00 [INF] Starting web host
+2021-04-06 09:55:24.858 +07:00 [INF] Starting web host

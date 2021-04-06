@@ -59,44 +59,47 @@ namespace week1.Controllers
         }
 
         [HttpPut("UpdatePerson")]
-        public IActionResult UpdatePerson(int id , string name , double weight, double height , string birthDate)
+        public IActionResult UpdatePerson(int id, string name, double weight, double height, string birthDate)
         {
             var person = PersonData().Where(x => x.Id.Equals(id)).FirstOrDefault();
-            
-            if(weight != 0 )
-            {
-                if (weight >= 40 && weight <= 200)  
-                {
-                    person.Weight = weight;
-                }else{
-                    return NotFound("weight valid range 40 - 200 "+ "\n" +"your weight:"+ weight);
-                }
-            }
 
-            if(name != null )
+            if (name != null)
             {
-                if (name.Length <= 10 )  
+                if (name.Length <= 10)
                 {
                     person.Name = name;
-                }else
+                }
+                else
                 {
-                    return NotFound("Name length can not more than 10 digits "+ "\n" +"your name: "+ name.Length+ "digits");
+                    return BadRequest("Name length can not more than 10 digits " + "\n" + "your name: " + name.Length + " digits");
                 }
             }
 
-            if(birthDate != null )
+            if (birthDate != null)
             {
-               person.BirthDate = Convert.ToDateTime(birthDate);
+                person.BirthDate = Convert.ToDateTime(birthDate);
             }
 
-            if(height != 0 )
+            if (weight != 0)
             {
-                if (height >= 140 && height <= 220)  
+                if (weight >= 40 && weight <= 200)
+                {
+                    person.Weight = weight;
+                }
+                else
+                {
+                    return BadRequest("weight valid range 40 - 200 " + "\n" + "your weight: " + weight);
+                }
+            }
+            if (height != 0)
+            {
+                if (height >= 140 && height <= 220)
                 {
                     person.Height = height;
-                }else
+                }
+                else
                 {
-                    return NotFound("Height valid range 140 - 220 "+ "\n" +"your height:"+ height);
+                    return BadRequest("Height valid range 140 - 220 " + "\n" + "your height: " + height);
                 }
             }
 
@@ -106,13 +109,19 @@ namespace week1.Controllers
 
         [HttpDelete("DeletePersonById")]
         public IActionResult DeletePersonById(int id){
-             var person = PersonData();
-             person.RemoveAll(x => x.Id.Equals(id));
-             return Ok(person);
+             var data = PersonData();
+             var person = PersonData().Where(x => x.Id.Equals(id)).FirstOrDefault();
+
+             if(person == null)
+             {
+                 return NotFound("Not found Id: "+id);
+             }else
+             {
+                data.RemoveAll(x => x.Id.Equals(id));
+             }
+
+             return Ok(data);
         }
 
-       
-
         }
-
     }
