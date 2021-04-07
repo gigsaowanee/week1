@@ -120,7 +120,7 @@ namespace week1.Controllers
       public IActionResult SearchBooks(string search)
         {
             var bookListx = new List<Book>();
-            //shotHand
+            //ShotHand
             bookListx.Add(new Book() { Id = 1, Name = "Salmon", Price = 20, CreatedDate = DateTime.Now });
             bookListx.Add(new Book() { Id = 3, Name = "Mama", Price = 20, CreatedDate = DateTime.Now });
             bookListx.Add(new Book() { Id = 4, Name = "Cola", Price = 20, CreatedDate = DateTime.Now });
