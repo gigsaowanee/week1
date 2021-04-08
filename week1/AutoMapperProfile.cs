@@ -23,6 +23,9 @@ namespace week1
             CreateMap<Customer, CustomerDTO_ToReturn>().ReverseMap();
             CreateMap<Room, RoomDTO_ToReturn>().ReverseMap();
             CreateMap<Employee, EmployeeDTO_ToReturn>().ReverseMap();
+            CreateMap<Person, PersonDTO_ToReturn>().ReverseMap();
+       
         }
+        
     }
 }

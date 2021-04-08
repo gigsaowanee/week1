@@ -3,6 +3,8 @@ using week1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using week1.Data;
 
 namespace week1.Controllers
 {
@@ -10,6 +12,15 @@ namespace week1.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
+        private readonly IMapper _mapper;
+        private readonly AppDBContext _db;
+
+        public BooksController(IMapper mapper,AppDBContext db)
+        {
+            this._mapper = mapper;
+            this._db = db;
+        }
+
         [HttpGet]
         public IActionResult Get(string name)
         {
@@ -119,20 +130,7 @@ namespace week1.Controllers
       [HttpGet("SearchBooks")]
       public IActionResult SearchBooks(string search)
         {
-            var bookListx = new List<Book>();
-            //ShotHand
-            bookListx.Add(new Book() { Id = 1, Name = "Salmon", Price = 20, CreatedDate = DateTime.Now });
-            bookListx.Add(new Book() { Id = 3, Name = "Mama", Price = 20, CreatedDate = DateTime.Now });
-            bookListx.Add(new Book() { Id = 4, Name = "Cola", Price = 20, CreatedDate = DateTime.Now });
-            bookListx.Add(new Book() { Id = 5, Name = "Egg", Price = 20, CreatedDate = DateTime.Now });
-            bookListx.Add(new Book() { Id = 6, Name = "Cheese", Price = 20, CreatedDate = DateTime.Now });
-            bookListx.Add(new Book() { Id = 7, Name = "Egg", Price = 20, CreatedDate = DateTime.Now });
-            bookListx.Add(new Book() { Id = 8, Name = "Cheese", Price = 20, CreatedDate = DateTime.Now });
-
-            var baconBook = new Book() { Id = 2, Name = "Bacon", Price = 20, CreatedDate = DateTime.Now };
-            bookListx.Add(baconBook);
-
-            var searchResult = bookListx.Where(x => x.Name.Contains(search)).First();
+            var searchResult = _db.Books.Where(x => x.Name.Contains(search)).First();
             return Ok(searchResult);
         }
 

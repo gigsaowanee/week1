@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace week1.Models
 {
     public class Book
-    {        
+    {   [Key]
         [Range(1,int.MaxValue)]
         public int Id { get; set; } 
         [Required]

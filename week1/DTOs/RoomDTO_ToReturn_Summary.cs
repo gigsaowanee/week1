@@ -6,5 +6,6 @@ namespace week1.DTOs
     {
         public int TotalRooms { get; set; }
         public List<RoomDTO_ToReturn> Detail { get; set; }
+        
     }
 }

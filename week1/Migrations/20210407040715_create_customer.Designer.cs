@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using week1.Data;
 
 namespace week1.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210407040715_create_customer")]
+    partial class create_customer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,56 +74,6 @@ namespace week1.Migrations
                     b.ToTable("Customer","sale");
                 });
 
-            modelBuilder.Entity("week1.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employee","sale");
-                });
-
-            modelBuilder.Entity("week1.Models.Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
-
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Person","Personal");
-                });
-
             modelBuilder.Entity("week1.Models.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -140,48 +92,24 @@ namespace week1.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("20cf6f9b-386e-4961-84d4-4c78301924db"),
+                            Id = new Guid("384698eb-6a12-4a19-bc98-8b8c07eda1ce"),
                             Name = "user"
                         },
                         new
                         {
-                            Id = new Guid("30c71ef4-e845-49da-af9a-a56944da51c7"),
+                            Id = new Guid("ff7367f0-36f5-4aad-b9f6-5c3bc01bf509"),
                             Name = "Manager"
                         },
                         new
                         {
-                            Id = new Guid("6c9c6274-10c3-4ef1-9e74-5d2d02096601"),
+                            Id = new Guid("20ec5a36-2310-4889-aec9-c8fc79ca2878"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("05433485-ac37-4f9c-be11-0b220fd3a15b"),
+                            Id = new Guid("49e1e26d-0e22-4622-a0c7-178ab8a3edb8"),
                             Name = "Developer"
                         });
-                });
-
-            modelBuilder.Entity("week1.Models.Room", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Floor")
-                        .HasColumnType("int");
-
-                    b.Property<int>("People")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoomId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Room","Hotel");
                 });
 
             modelBuilder.Entity("week1.Models.User", b =>

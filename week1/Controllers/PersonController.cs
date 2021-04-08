@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using week1.Data;
+using week1.DTOs;
 using week1.Models;
 
 namespace week1.Controllers
@@ -10,27 +13,18 @@ namespace week1.Controllers
     [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
-        private List<Person> PersonData()
-        {
-            var person = new List<Person>();
-            person.Add(new Person() { Id = 1, Name = "Poo", Weight = 50, Height = 165, BirthDate = new DateTime(1998, 01, 11) });
-            person.Add(new Person() { Id = 2, Name = "Pla", Weight = 45, Height = 166, BirthDate = new DateTime(1999, 02, 02) });
-            person.Add(new Person() { Id = 3, Name = "Ta", Weight = 47, Height = 159, BirthDate = new DateTime(1997, 03, 14) });
-            person.Add(new Person() { Id = 4, Name = "Ploy", Weight = 60, Height = 170, BirthDate = new DateTime(1996, 04, 23) });
-            person.Add(new Person() { Id = 5, Name = "Gig", Weight = 45, Height = 177, BirthDate = new DateTime(1995, 05, 22) });
-            person.Add(new Person() { Id = 6, Name = "Man", Weight = 78, Height = 180, BirthDate = new DateTime(1994, 06, 21) });
-            person.Add(new Person() { Id = 7, Name = "Jib", Weight = 90, Height = 178, BirthDate = new DateTime(1993, 07, 10) });
-            person.Add(new Person() { Id = 8, Name = "Joy", Weight = 12, Height = 165, BirthDate = new DateTime(1992, 08, 18) });
-            person.Add(new Person() { Id = 9, Name = "Joom", Weight = 58, Height = 166, BirthDate = new DateTime(1997, 09, 28) });
-            person.Add(new Person() { Id = 10, Name = "Faii", Weight = 60, Height = 170, BirthDate = new DateTime(1998, 11, 30) });
+        private readonly IMapper _mapper;
+        private readonly AppDBContext _db;
 
-            return person;
+        public PersonController( IMapper mapper,AppDBContext db){
+            this._mapper = mapper; 
+            this._db = db; 
         }
 
         [HttpGet("GetPerson")]
       public IActionResult GetPerson()
         {
-             var person = PersonData();
+             var person = _db.Persons.ToList();
              int count = person.Count();
              string text = "Total Persons = " + count.ToString() +"\n";
              foreach(var i in person){
@@ -41,84 +35,64 @@ namespace week1.Controllers
         }
 
         [HttpPost("InsertPerson")]
-        public IActionResult InsertPerson(Person item){
-              var person = PersonData();
+        public IActionResult InsertPerson(PersonDTO_ToCreate item){
+              
+             var person = new Person();
 
-            person.Add(new Person() { Id = item.Id , Name = item.Name, Weight = item.Weight, Height = item.Height, BirthDate = item.BirthDate });
-            var result = person.Where(x => x.Id.Equals(item.Id)).FirstOrDefault();
-            string text = "Insert Successfully" + "\n\n" + "Id: "+result.Id +"\n"+"Name: "+result.Name+"\n"+"Weight: "+result.Weight+"\n"+"Height: "+result.Height +"\n"+"BirthDate: "+result.BirthDate.ToString("dd/MM/yyyy");
-            return Ok(text);
+             person.Name = item.Name;
+             person.Weight = item.Weight;
+             person.Height = item.Height;
+             person.BirthDate = item.BirthDate;
+
+             _db.Persons.Add(person);
+             _db.SaveChanges();
+
+             var result = _mapper.Map<PersonDTO_ToReturn>(person);
+
+            return Ok(result);
         }
 
         [HttpGet("GetPersonByWeight")]
          public IActionResult GetPersonByWeight(double searchMin , double searchMax)
         {
-            var person = PersonData();
+            
+             var person = _db.Persons.ToList();
             var result = person.Where(x => x.Weight >= searchMin && x.Weight <= searchMax).ToList();
             return Ok(result);
         }
 
-        [HttpPut("UpdatePerson")]
-        public IActionResult UpdatePerson(int id, string name, double weight, double height, string birthDate)
+        [HttpPut("UpdatePerson/{id}")]
+        public IActionResult UpdatePerson(PersonDTO_ToUpdate input , int id)
         {
-            var person = PersonData().Where(x => x.Id.Equals(id)).FirstOrDefault();
+             var person = _db.Persons.Where(x => x.Id == id).FirstOrDefault();
 
-            if (name != null)
-            {
-                if (name.Length <= 10)
-                {
-                    person.Name = name;
-                }
-                else
-                {
-                    return BadRequest("Name length can not more than 10 digits " + "\n" + "your name: " + name.Length + " digits");
-                }
-            }
+             
+             person.Name = input.Name;
+             person.Weight = input.Weight;
+             person.Height = input.Height;
+             person.BirthDate = Convert.ToDateTime(input.BirthDate);
+            
+             _db.SaveChanges();
+             var result = _mapper.Map<PersonDTO_ToReturn>(person);
 
-            if (birthDate != null)
-            {
-                person.BirthDate = Convert.ToDateTime(birthDate);
-            }
-
-            if (weight != 0)
-            {
-                if (weight >= 40 && weight <= 200)
-                {
-                    person.Weight = weight;
-                }
-                else
-                {
-                    return BadRequest("weight valid range 40 - 200 " + "\n" + "your weight: " + weight);
-                }
-            }
-            if (height != 0)
-            {
-                if (height >= 140 && height <= 220)
-                {
-                    person.Height = height;
-                }
-                else
-                {
-                    return BadRequest("Height valid range 140 - 220 " + "\n" + "your height: " + height);
-                }
-            }
-
-            string text = "Update Successfully" + "\n\n" + "Id: " + person.Id + "\n" + "Name: " + person.Name + "\n" + "Weight: " + person.Weight + "\n" + "Height: " + person.Height + "\n" + "BirthDate: " + person.BirthDate.ToString("dd/MM/yyyy");
-            return Ok(text);
+            return Ok(result);
         }
 
         [HttpDelete("DeletePersonById")]
         public IActionResult DeletePersonById(int id){
-             var data = PersonData();
-             var person = PersonData().Where(x => x.Id.Equals(id)).FirstOrDefault();
+             var data =_db.Persons.ToList();
+             var person = data.Where(x => x.Id.Equals(id)).FirstOrDefault();
 
              if(person == null)
              {
                  return NotFound("Not found Id: "+id);
              }else
              {
-                data.RemoveAll(x => x.Id.Equals(id));
+                _db.Persons.Remove(person);
              }
+
+             _db.SaveChanges();
+           var result = _mapper.Map<List<PersonDTO_ToReturn>>(data);
 
              return Ok(data);
         }
