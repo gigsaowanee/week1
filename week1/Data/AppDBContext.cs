@@ -2,6 +2,7 @@
 using week1.Models;
 using System;
 using System.Collections.Generic;
+using week1.Models.Store;
 
 namespace week1.Data
 {
@@ -34,18 +35,16 @@ namespace week1.Data
         }
 
         public DbSet<User> Users { get; set; }
-
         public DbSet<Role> Roles { get; set; }
-
         public DbSet<UserRole> UserRoles { get; set; }
-
         public DbSet<Book> Books { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        
         public DbSet<Employee> Employees { get; set; }
-        
         public DbSet<Person> Persons { get; set; }
-        
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<ProductGroup> ProductGroups { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+         public DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

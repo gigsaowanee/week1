@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using week1.Data;
 
 namespace week1.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210408032649_add_product_new")]
+    partial class add_product_new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,22 +145,22 @@ namespace week1.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bc28591b-d3f7-463a-860f-903457b8b587"),
+                            Id = new Guid("7f246142-f57e-4458-a1bf-0a1f34f57f01"),
                             Name = "user"
                         },
                         new
                         {
-                            Id = new Guid("df5f0df9-fbfa-418b-87f5-d00bd857ac9b"),
+                            Id = new Guid("f5230a33-61e0-43db-83b9-9c2dfbefed87"),
                             Name = "Manager"
                         },
                         new
                         {
-                            Id = new Guid("89fe256f-8b28-4ab0-905b-4e1cc20afc77"),
+                            Id = new Guid("5198ab3f-1d9d-4521-87a4-420948f07631"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("8354fce6-6fe2-48ef-abcb-1ff8f5a6f32c"),
+                            Id = new Guid("1420fd19-2a52-4d68-a4e4-25187555cb7f"),
                             Name = "Developer"
                         });
                 });
@@ -189,61 +191,6 @@ namespace week1.Migrations
                     b.ToTable("Room","Hotel");
                 });
 
-            modelBuilder.Entity("week1.Models.Store.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalCount")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Order","Store");
-                });
-
-            modelBuilder.Entity("week1.Models.Store.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("OrderDetailDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QTY")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetail","Store");
-                });
-
             modelBuilder.Entity("week1.Models.Store.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -260,9 +207,6 @@ namespace week1.Migrations
 
                     b.Property<int>("NumberOfProduct")
                         .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
 
                     b.Property<int>("ProductGroupId")
                         .HasColumnType("int");
@@ -335,21 +279,6 @@ namespace week1.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole","auth");
-                });
-
-            modelBuilder.Entity("week1.Models.Store.OrderDetail", b =>
-                {
-                    b.HasOne("week1.Models.Store.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("week1.Models.Store.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("week1.Models.Store.Product", b =>

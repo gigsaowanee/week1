@@ -92,9 +92,10 @@ namespace week1.Controllers
              }
 
              _db.SaveChanges();
+
            var result = _mapper.Map<List<PersonDTO_ToReturn>>(data);
 
-             return Ok(data);
+             return Ok(result);
         }
 
         }

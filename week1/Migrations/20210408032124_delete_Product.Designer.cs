@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using week1.Data;
 
 namespace week1.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210408032124_delete_Product")]
+    partial class delete_Product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,22 +145,22 @@ namespace week1.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bc28591b-d3f7-463a-860f-903457b8b587"),
+                            Id = new Guid("66e3bcc3-8058-453e-95c1-21c753179f42"),
                             Name = "user"
                         },
                         new
                         {
-                            Id = new Guid("df5f0df9-fbfa-418b-87f5-d00bd857ac9b"),
+                            Id = new Guid("3960da17-4ac2-4303-aea7-ddcff548ceec"),
                             Name = "Manager"
                         },
                         new
                         {
-                            Id = new Guid("89fe256f-8b28-4ab0-905b-4e1cc20afc77"),
+                            Id = new Guid("596474ec-7f2e-4cb4-a1ca-fc1403d2d4eb"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("8354fce6-6fe2-48ef-abcb-1ff8f5a6f32c"),
+                            Id = new Guid("612f1740-12c7-4205-9ca0-8d2801567e52"),
                             Name = "Developer"
                         });
                 });
@@ -187,115 +189,6 @@ namespace week1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Room","Hotel");
-                });
-
-            modelBuilder.Entity("week1.Models.Store.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalCount")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Order","Store");
-                });
-
-            modelBuilder.Entity("week1.Models.Store.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("OrderDetailDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QTY")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetail","Store");
-                });
-
-            modelBuilder.Entity("week1.Models.Store.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfProduct")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ProductGroupId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductGroupId");
-
-                    b.ToTable("Product","Store");
-                });
-
-            modelBuilder.Entity("week1.Models.Store.ProductGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GroupCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(5)")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductGroup","Store");
                 });
 
             modelBuilder.Entity("week1.Models.User", b =>
@@ -335,30 +228,6 @@ namespace week1.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole","auth");
-                });
-
-            modelBuilder.Entity("week1.Models.Store.OrderDetail", b =>
-                {
-                    b.HasOne("week1.Models.Store.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("week1.Models.Store.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("week1.Models.Store.Product", b =>
-                {
-                    b.HasOne("week1.Models.Store.ProductGroup", "ProductGroup")
-                        .WithMany("Product")
-                        .HasForeignKey("ProductGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("week1.Models.UserRole", b =>
