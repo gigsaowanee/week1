@@ -10,6 +10,7 @@ namespace week1.Models.Store
     {   
         [Key]
         public int Id { get; set; }
+        
         [Required]
         public int ProductGroupId { get; set; }
         public ProductGroup ProductGroup { get; set; }

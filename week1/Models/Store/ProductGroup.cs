@@ -10,6 +10,7 @@ namespace week1.Models.Store
     {
         [Key]
         public int Id { get; set; }
+        
         [Required(ErrorMessage = "GroupCode can't be null")]
         [StringLength(5, ErrorMessage = "GroupCode can be 1-5 digits")]
         public string GroupCode { get; set; }

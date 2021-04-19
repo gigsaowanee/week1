@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using week1.Services.Orders;
 
 namespace week1
 {
@@ -88,6 +89,9 @@ namespace week1
             //------Service------
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IOrderService, OrderService>();
+
+            
             //------End: Service------
 
             AddFormatters(services);
